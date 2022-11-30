@@ -4,6 +4,7 @@ import logger from "koa-logger"
 import bodyparser from "koa-bodyparser"
 // routes
 import authRoutes from "./routes/auth"
+import "./db"
 
 // koa 应用实例
 const app = new Koa()
