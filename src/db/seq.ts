@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize-typscript";
+import { Sequelize } from "sequelize-typescript";
 const sequelize = new Sequelize({
   host: "localhost",
   database: "vue3-admin",
@@ -6,8 +6,8 @@ const sequelize = new Sequelize({
   dialect: "mysql",
   username: "root",
   password: "",
-  models: [__dirname + "/models/*.model.ts"], // or [User, Role]
-  pools: {
+  models: [__dirname + "/models/*.model.ts"], // or [User, Role],
+  pool: {
     // 连接池
     max: 5, // 最大连接数量
     min: 0,

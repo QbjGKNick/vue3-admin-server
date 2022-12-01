@@ -19,7 +19,7 @@
     "koa-logger": "^3.2.1",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.26.0",
+    "sequelize": "^6.25.8",
     "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {
