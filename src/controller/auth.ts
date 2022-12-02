@@ -3,8 +3,9 @@ import { createUser, getUserInfo } from "../service/auth";
 import { ErrorResponse, SuccessResponse } from "../utils/Response";
 import errorInfo from "../constants/errorInfo";
 import { createHmac } from "../utils/createHmac";
+import { createToken } from "../utils/token"
 
-const { registerUserNameExistInfo, registerFailInfo } = errorInfo;
+const { registerUserNameExistInfo, registerFailInfo, loginFailInfo } = errorInfo;
 
 export const registerController = async (params: UserAttributes) => {
   const { username, password } = params;
@@ -30,3 +31,27 @@ export const registerController = async (params: UserAttributes) => {
     return new ErrorResponse(code, message);
   }
 };
+
+export interface LoginModel {
+  username: string;
+  password: string
+}
+
+export const loginController = async (params: LoginModel) => {
+  const { username, password } = params
+  // 根据用户名和密码 获取用户信息
+  const userInfo = await getUserInfo({ username, password })
+  if (userInfo) {
+    // 能获取到返回token
+    const { id, username } = userInfo
+    const token = createToken({
+      // 根据用户id和用户名生成 token
+      id,
+      username
+    })
+    return new SuccessResponse({ token })
+  }
+  // 获取不到返回 登录失败
+  const { code, message } = loginFailInfo
+  return new ErrorResponse(code, message)
+}
