@@ -1,3 +1,11 @@
+/*
+ * @Author: jiangqb jiangqb@citycloud.com.cn
+ * @Date: 2022-12-01 08:58:23
+ * @LastEditors: jiangqb jiangqb@citycloud.com.cn
+ * @LastEditTime: 2022-12-13 21:16:24
+ * @FilePath: /vue3-admin-server/src/db/models/User.model.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { Optional } from "sequelize";
 import {
   Table,
@@ -8,7 +16,10 @@ import {
   Comment,
   AllowNull,
   Default,
+  BelongsToMany,
 } from "sequelize-typescript";
+import Role from "./Role.model"
+import UserRole from "./UserRole.model"
 // sequelize+typescript 参考文档
 // https://sequelize.org/master/manual/typescript.html
 
@@ -23,6 +34,10 @@ export interface UserAttributes {
   isSuper: 0 | 1;
   status: 0 | 1;
 }
+
+// 用户表包含对应的角色
+export type UserAttributesWithRoles = UserAttributes & { roleIds: [] }
+
 interface UserCreationAttributes
   extends Optional<UserAttributes, "id" | "isSuper" | "status" | "avatar"> {}
 @Table({ tableName: "User" })
@@ -68,5 +83,9 @@ class User extends Model<UserAttributes, UserCreationAttributes> {
   @Default(1)
   @Column
   status: boolean;
+
+  // 一个用户关联多个角色
+  @BelongsToMany(() => Role, () => UserRole)
+  roles: Role[]
 }
 export default User;
