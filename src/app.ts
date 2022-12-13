@@ -2,7 +2,7 @@
  * @Author: jiangqb jiangqb@citycloud.com.cn
  * @Date: 2022-12-01 08:58:23
  * @LastEditors: jiangqb jiangqb@citycloud.com.cn
- * @LastEditTime: 2022-12-02 14:06:06
+ * @LastEditTime: 2022-12-13 22:21:49
  * @FilePath: /vue3-admin-server/src/app.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BDwei
  */
@@ -15,6 +15,8 @@ import authRoutes from "./routes/auth"
 import "./db"
 import jwt from "koa-jwt"
 import { jwtSecret } from "./config/auth"
+
+import rolesRoutes from "./routes/role"
 
 // koa 应用实例
 const app = new Koa()
@@ -53,7 +55,9 @@ app.use(
 
 // routes
 // 用户验证路由（登录 注册）
-app.use(authRoutes.routes()).use(authRoutes.allowedMethods())
+// app.use(authRoutes.routes()).use(authRoutes.allowedMethods())
+
+app.use(rolesRoutes.routes()).use(rolesRoutes.allowedMethods())
 
 // listen
 const port = process.env.PORT || 3000
